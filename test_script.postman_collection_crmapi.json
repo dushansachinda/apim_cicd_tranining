@@ -573,7 +573,7 @@
 	"variable": [
 		{
 			"key": "baseUrl",
-			"value": "dev.apim.com"
+			"value": "test.apim.com"
 		},
 		{
 			"key": "clientName",
