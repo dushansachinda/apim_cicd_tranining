@@ -1,12 +1,12 @@
 environments:
-  - name: dev
+  - name: test
     endpoints:
       production:
-        url: http://dev.be.com:8595/
+        url: http://test.be.com:8595/
         config:
           retryTimeOut: $RETRY
       sandbox:
-        url: http://devnow.be.com:8595/
+        url: http://test.be.com:8595/
         config:
           retryTimeOut: $RETRY        
   - name: prod
