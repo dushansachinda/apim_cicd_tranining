@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "5fd34ffa-18e5-4752-8dca-b1f145b4c873",
-		"name": "APIM Demo",
+		"_postman_id": "58dd2c45-a5e8-4056-aa9f-8c94825aec2a",
+		"name": "APIM CRM API Demo 320",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -56,7 +56,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://{{baseUrl}}:9443/client-registration/v0.16/register",
+					"raw": "https://{{baseUrl}}:9443/client-registration/v0.17/register",
 					"protocol": "https",
 					"host": [
 						"{{baseUrl}}"
@@ -64,7 +64,7 @@
 					"port": "9443",
 					"path": [
 						"client-registration",
-						"v0.16",
+						"v0.17",
 						"register"
 					]
 				}
@@ -396,7 +396,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"owner\": [\r\n    {\r\n      \"ID\": \"Sample String\",\r\n      \"name\": \"Sample String\",\r\n      \"city\": \"Sample String\",\r\n      \"code\": \"Sample String\",\r\n      \"country\": \"Sample String\"\r\n    }\r\n  ],\r\n    \"lead\": [\r\n      {\r\n        \"ID\": \"Sample String\",\r\n        \"name\": \"Sample String\",\r\n        \"city\": \"Sample String\",\r\n        \"code\": \"Sample String\",\r\n        \"country\": \"Sample String\"\r\n      }\r\n    ],\r\n      \"sendNotificationEmail\": \"Sample String\",\r\n        \"convertedStatus\": \"Sample String\",\r\n          \"doNotCreateOpportunity\": \"Sample String\",\r\n            \"opportunityName\": \"Sample String\",\r\n              \"overwriteLeadSource\": \"Sample String\",\r\n                \"sessionId\": \"Sample String\"\r\n}\r\n",
+					"raw": "{\n    \"fullName\": \"John Doe\",\n    \"dob\": \"20/04/1992\",\n    \"city\": \"Colombo\",\n    \"ssn\": \"{{$randomInt}}\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -404,16 +404,17 @@
 					}
 				},
 				"url": {
-					"raw": "https://{{baseUrl}}:8243/users/v1/",
+					"raw": "https://{{baseUrl}}:8243/userscrm/v1/api/users",
 					"protocol": "https",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"port": "8243",
 					"path": [
-						"users",
+						"userscrm",
 						"v1",
-						""
+						"api",
+						"users"
 					]
 				}
 			},
@@ -458,15 +459,17 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{baseUrl}}:8280/users/v1/{{userID}}",
+					"raw": "http://{{baseUrl}}:8280/userscrm/v1/api/users/{{userID}}",
 					"protocol": "http",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"port": "8280",
 					"path": [
-						"users",
+						"userscrm",
 						"v1",
+						"api",
+						"users",
 						"{{userID}}"
 					]
 				}
@@ -502,15 +505,17 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://{{baseUrl}}:8280/users/v1/{{userID}}",
+					"raw": "http://{{baseUrl}}:8280/userscrm/v1/api/users/{{userID}}",
 					"protocol": "http",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"port": "8280",
 					"path": [
-						"users",
+						"userscrm",
 						"v1",
+						"api",
+						"users",
 						"{{userID}}"
 					]
 				}
@@ -572,7 +577,7 @@
 		},
 		{
 			"key": "clientName",
-			"value": "sampleMobileApp"
+			"value": "CRMMobileAppTest"
 		},
 		{
 			"key": "username",
