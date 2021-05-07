@@ -1,0 +1,88 @@
+pipeline {
+    triggers {
+       githubPush()
+    }
+    agent any
+    tools {
+          nodejs "Node"
+          maven 'maven-3.6.3'
+    }
+    environment {
+        CI = 'true'
+        CURR_DIR = pwd()
+        API_DIR = '/CRMAPI'
+        TEST_ENV = 'test'
+        PROD_ENV = 'prod'
+        TEST_SCRIPT_FILE = 'test_script.postman_collection_crmapi.json' 
+    }
+    stages {
+        
+        
+        stage('Preparation') {
+            steps{
+                sh '''
+                    echo "PATH = ${PATH}"
+                    echo "M2_HOME = ${M2_HOME}"
+                '''
+                git branch: "main",
+                url: 'https://github.com/dushansachinda/apim_cicd_tranining.git',
+                credentialsId: 'demo-github-cred'
+            }
+        }
+        
+
+        stage('Deploy to TEST') {
+            environment{
+                RETRY = '80'
+                STATE='PUBLISHED'
+            }
+            steps {
+            
+                echo 'Logging into $TEST_ENV'
+                withCredentials([usernamePassword(credentialsId: 'dev_apim_admin', usernameVariable: 'DEV_USERNAME', passwordVariable: 'DEV_PASSWORD')]) {
+                    sh 'apictl login $TEST_ENV -u $DEV_USERNAME -p $DEV_PASSWORD -k'                        
+                }
+                echo 'Deploying to $TEST_ENV'
+                sh 'apictl import-api -f $CURR_DIR$API_DIR -e $TEST_ENV -k --preserve-provider --update --verbose'
+                
+                echo 'Sleeping 5sec'
+                sleep(5)
+                echo 'Wake up'
+            }
+        }
+        
+        stage('Run Tests') {
+            steps {
+                echo 'Running tests in $TEST_ENV'
+                sh 'newman run $CURR_DIR/$TEST_SCRIPT_FILE --insecure' 
+            }
+        }
+        
+        stage('Deploy to Production') {
+            environment{
+                RETRY = '60'
+            }
+            steps {
+                sh 'echo "Logging into $PROD_ENV"'
+                withCredentials([usernamePassword(credentialsId: 'prod_apim_admin', usernameVariable: 'PROD_USERNAME', passwordVariable: 'PROD_PASSWORD')]) {
+                    sh 'apictl login $PROD_ENV -u $PROD_USERNAME -p $PROD_PASSWORD -k'                        
+                }
+                echo 'Deploying to Production'
+                sh 'apictl import-api -f $CURR_DIR$API_DIR -e $PROD_ENV -k --preserve-provider --update --verbose'
+            }
+        }
+    }
+    
+    post {
+        cleanup {
+            deleteDir()
+            dir("${workspace}@tmp") {
+                deleteDir()
+            }
+            dir("${workspace}@script") {
+                deleteDir()
+            }
+        }
+    }
+   
+}
