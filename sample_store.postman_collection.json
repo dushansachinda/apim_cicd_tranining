@@ -437,7 +437,7 @@
 		{
 			"id": "fb418e8e-03f6-4f15-b76c-a193f0bc6bf4",
 			"key": "baseUrl",
-			"value": "https://host.docker.internal:8243/SampleStore/1.0.0",
+			"value": "https://localhost:8243/SampleStore/1.0.0",
 			"type": "string"
 		}
 	]
