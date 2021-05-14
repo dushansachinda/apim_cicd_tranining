@@ -12,7 +12,7 @@ environments:
   - name: prod
     endpoints:
       production:
-        url: http://prod.be.com:8595/
+        url: http://prodtest.be.com:8595/
         config:
           retryTimeOut: $RETRY      
       sandbox:
