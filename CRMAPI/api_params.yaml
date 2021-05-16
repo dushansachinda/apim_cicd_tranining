@@ -2,7 +2,7 @@ environments:
   - name: test
     endpoints:
       production:
-        url: http://testbreak.be.com:8595/
+        url: http://test.be.com:8595/
         config:
           retryTimeOut: $RETRY
       sandbox:
